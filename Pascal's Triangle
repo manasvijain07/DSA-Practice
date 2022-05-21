@@ -21,7 +21,7 @@ Constraints:
 
 -------------------------------------------
 
-Solution 1 - TC - 
+Solution 1 - TC - O(n ^ 2) SC - O(n)
 
 List<List<Integer>> res = new ArrayList<>();
         
