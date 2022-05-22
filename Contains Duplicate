@@ -23,4 +23,57 @@ Constraints:
 
 ------------------------------------------------------
 
-Solution 1 - 
+Solution 1 - Brute force - Time limit exceeded
+
+ if(nums.length < 1) 
+            return false;
+        
+        for(int i = 0; i < nums.length; i++)
+        {
+            for(int j = i + 1; j < nums.length; j++)
+            {
+                if(nums[i] == nums[j])
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+ -------------------------------------------------
+ 
+ Solution 2 - TC - O(n log n) SC - O(1)
+ 
+     public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums);
+        
+        for(int i = 0; i < nums.length - 1; i++)
+        {
+            if(nums[i] == nums[i + 1])
+                return true;
+        }
+        return false;
+    }
+   
+ -----------------------------------------------------------
+ 
+ Solution 2 - TC - O(n) SC - O(n)
+ 
+public boolean containsDuplicate(int[] nums) {
+        if(nums.length < 1) 
+            return false;
+        
+        HashSet<Integer> set = new HashSet<>();
+        
+        for(int i : nums)
+        {
+            if(set.contains(i))
+                return true;
+            set.add(i);
+            
+        }
+        return false;
+    }
+ 
+
