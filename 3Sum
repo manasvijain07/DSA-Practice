@@ -1,0 +1,119 @@
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Example 2:
+
+Input: nums = []
+Output: []
+Example 3:
+
+Input: nums = [0]
+Output: []
+ 
+
+Constraints:
+
+0 <= nums.length <= 3000
+-105 <= nums[i] <= 105
+
+------------------------------------------------------
+
+Solution 1 - TC - O(n ^ 2) SC - O(n)
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        
+        if(nums.length < 3)
+            return result;
+        
+        Set<List<Integer>> set = new HashSet<>();
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(nums[0], 0);
+        
+        for(int i = 0; i < nums.length - 1; i++)
+        {
+            for(int j = i + 1; j < nums.length; j++)
+            {
+                int val = 0 - (nums[i] + nums[j]);
+                if(map.containsKey(val) && map.get(val) != i && map.get(val) != j)
+                {
+                    ArrayList<Integer> list = new ArrayList<>(Arrays.asList(nums[i], nums[j], val));
+                    Collections.sort(list);
+                    set.add(list);
+                }
+                map.put(nums[j], j);
+            }
+        }
+        
+        for(List<Integer> s: set)
+        {
+            result.add(s);
+        }
+        return result;
+    }
+}
+
+----------------------------------------------------
+
+Solution 2 - Binary Search - TC - O(n ^ 2) SC - O(1)
+
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        
+        if(nums.length < 3)
+            return result;
+        
+        Arrays.sort(nums);
+        
+        for(int i = 0; i < nums.length - 1; i++)
+        {
+            if(i != 0 && nums[i] == nums[i - 1]) continue;
+            
+            int low = i + 1, high = nums.length - 1;
+            while(low < high)
+            {
+                int sum = nums[i] + nums[low] + nums[high];
+                if(sum == 0)
+                {
+                    List<Integer> list = Arrays.asList(nums[i], nums[low], nums[high]);
+                    result.add(list);
+                    
+                    low++;
+                    high--;
+                    
+                    while(low < high && nums[low] == nums[low - 1])
+                    {
+                        low++;
+                    }
+                        
+                    while(low < high && nums[high] == nums[high + 1])
+                    {
+                        high--;
+                    }  
+                } 
+                
+                else if(sum < 0)
+                {
+                    low++;
+                }
+                else
+                {
+                    high--;
+                }
+            }
+        }
+        
+        return result;
+    }
+}
