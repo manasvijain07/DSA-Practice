@@ -69,3 +69,72 @@ class Solution {
         }
     }
 }
+
+
+----------------------------------------------------
+
+Solution 2 - Tc - O(m * n) SC - O(1)
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        boolean isCol = false, isRow = false;
+        int R = matrix.length, C = matrix[0].length;
+        
+        // set isCol to true if col = 0
+        for(int i=0; i<matrix.length; i++){
+            if(matrix[i][0] == 0){
+                isCol = true;
+                break;
+            }
+        }
+        
+         // set isRow to true if row = 0
+        for(int i=0; i<matrix[0].length; i++){
+            if(matrix[0][i] == 0){
+                isRow = true;
+                break;
+            }
+        }
+        
+         // set 1st row and 1st col to zero in case of any zeros in matrix
+        for(int i=1; i<matrix.length; i++){
+            for(int j=1; j<matrix[i].length; j++){
+                if(matrix[i][j] == 0){
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        
+        // set other rows and col to 0 if 1st row and 1st col are 0
+        
+        for(int i = 1; i < R; i++)
+        {
+            for(int j = 1; j < C; j++)
+            {
+                if(matrix[i][0] == 0 || matrix[0][j] == 0)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        // if isRow, set first row to zero
+        if(isRow)
+        {
+            for(int j = 0; j < C; j++)
+            {
+                matrix[0][j] = 0;
+            }
+        }
+        
+        // if isCol, set 1st col = 0
+        if(isCol)
+        {
+            for(int i = 0; i < R; i++)
+            {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}
